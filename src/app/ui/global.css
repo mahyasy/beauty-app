@@ -1,0 +1,33 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+
+
+
+body{
+    background: rgba(244,238, 217, 100%);
+    
+}
+
+.left-leaf{
+    opacity:20% ;
+    position: fixed;
+    top:373.96px;
+    right: 0;
+    transform: rotate(30deg);
+    width: auto;
+    z-index: 0;
+    user-select: none;
+}
+.right-leaf{
+    opacity:20% ;
+    position: fixed;
+    bottom: -89.98px;
+    left: 0;
+    transform: rotate(200deg);
+    width: auto;
+    z-index: 0;
+    user-select: none;
+
+}

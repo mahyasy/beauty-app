@@ -1,3 +1,4 @@
+"use client"
 
 
 import Menu from './Menu';
@@ -8,14 +9,19 @@ import { FcPhone } from "react-icons/fc";
 import { FcInfo } from "react-icons/fc";
 import { FcHome } from "react-icons/fc";
 import { HiScissors } from "react-icons/hi2";
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 
 const Navbar = () => {
+  const pathname = usePathname();
+  const isActive = (path)=> path === pathname;
+
   const navLink = [
-    {id:1, name: 'خانه', path:'/'},
-    {id:2, name: 'خدمات', path:'/sevices'},
-    {id:3, name: 'درباره ما', path:'/about'},
-    {id:4, name:"ورود/ثبت نام", path:'/register'}
+    {id:1, name: 'خانه', path:'/',tag:<FcHome/>},
+    {id:2, name: 'خدمات', path:'/services',tag:<HiScissors/>},
+    {id:3, name: 'درباره ما', path:'/about',tag:<FcInfo/>},
+    {id:4, name:"تماس با ما", path:'/call',tag:<FcPhone/>}
 
   ]
   return (
@@ -27,19 +33,25 @@ const Navbar = () => {
       </section>
       <section className="hidden md:flex justify-between p-6 select-none">
         <nav className="flex mr-5  justify-between">
-        <span className="pr-10 flex flex-row  items-center  gap-2 ">خانه <FcHome/></span>
-        <span className="mr-10 flex flex-row  items-center gap-2" >خدمات <HiScissors/></span>
-        <span className="mr-10 flex flex-row  items-center gap-2">درباره ما <FcInfo/></span>
-       
-        <span className="mr-10 flex flex-row  items-center gap-2">تماس با ما <FcPhone/></span>
+        
+          {navLink.map((link)=>{
+            return(
+              <span key={link.id} className="pr-10 flex flex-row  items-center  gap-2 ">
+                <Link className={isActive(link.path)?"border-b-2 border-pink rounded-md ":""}     href={link.path}>{link.name}</Link>
+                {link.tag}     
+              </span>
+
+            )
+          })}
+        
         </nav>
        
-        <div className="ml-10 bg-pink p-3 rounded-lg ">
-          <p className="text-[color:white]" >
+        <aside className="ml-10 bg-pink p-3 rounded-lg ">
+          <Link href='/register'  className="text-[color:white]" >
             ورود/ثبت نام
-          </p>
+          </Link>
           
-        </div>
+        </aside>
       </section>
 
     </div>
