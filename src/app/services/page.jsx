@@ -1,7 +1,13 @@
+import Service from "../../Components/service";
 
+export default function Services() {
+  return (
+    <section className="flex flex-col justify-center items-center mt-20">
+      <h1 className="text-brown text-3xl font-extrabold tracking-[.20em] mb-20  ">
+        SHABGIS
+      </h1>
 
-export default function Service(){
-    return <h1>
-         service mhaya
-    </h1>
+      <Service />
+    </section>
+  );
 }

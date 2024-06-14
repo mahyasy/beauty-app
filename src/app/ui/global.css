@@ -3,7 +3,12 @@
 @import 'tailwindcss/utilities';
 
 
-
+@layer base{
+    img{
+        width: auto;
+        height: auto;
+    }
+}
 
 body{
     background: rgba(244,238, 217, 100%);
