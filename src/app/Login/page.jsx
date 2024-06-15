@@ -1,11 +1,12 @@
 import Image from "next/image";
-import SignUp from '../../Components/SignUp'
+import SignIn from '../../Components/SignIn'
+
 
 
 export default function register(){
     return(
         <section className="mt-10 flex justify-center md:justify-around items-stretch ">
-        <SignUp/>
+        <SignIn/>    
       
             <aside className="hidden md:flex ">
             <section className="flex flex-row-reverse justify-around md:flex-col md:justify-center ">
