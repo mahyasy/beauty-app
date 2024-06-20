@@ -10,12 +10,13 @@ export async function POST(request: NextRequest) {
     const {
       name,
       faName,
+      description,
       images,
-    }: { name: string; faName: string; images: string[] } = body;
+    }: { name: string; faName: string; images: string[]; description: string } = body;
 
     await checkAdmin();
 
-    if (!name || !faName) {
+    if (!name || !faName || !description) {
       return NextResponse.json(
         { error: "مقادیر معتبر وارد کنید" },
         { status: 422 }
@@ -35,6 +36,7 @@ export async function POST(request: NextRequest) {
       name: name.toLowerCase(),
       faName,
       images,
+      description
     });
 
     console.log(category);
@@ -78,11 +80,12 @@ export async function PATCH(request: NextRequest) {
       name,
       faName,
       images,
-    }: { name: string; faName: string; images: string[]; id: string } = body;
+      description
+    }: { name: string; faName: string; images: string[]; id: string; description: string } = body;
 
     await checkAdmin();
 
-    if (!name || !faName) {
+    if (!name || !faName || !description) {
       return NextResponse.json(
         { error: "فیلد ها نمیتواند خالی باشد" },
         { status: 422 }
@@ -101,6 +104,7 @@ export async function PATCH(request: NextRequest) {
     category.name = name;
     category.faName = faName;
     category.images = images;
+    category.description = description;
     await category.save();
 
     return NextResponse.json(
