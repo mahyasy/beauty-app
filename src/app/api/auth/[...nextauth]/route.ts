@@ -6,7 +6,7 @@ import connectDB from "../../../../utils/connectDB";
 import User from "../../../../models/User";
 import { verifyPassword } from "../../../../utils/auth";
 
-const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -29,8 +29,9 @@ const authOptions: NextAuthOptions = {
 
         return {
           id: user._id,
-          mobile: user.mobile,
           name: user?.name,
+          role: user.role,
+          mobile: user.mobile,
         };
       },
     }),
@@ -41,6 +42,16 @@ const authOptions: NextAuthOptions = {
     error: "/auth/error", // Error code passed in query string as ?error=
     verifyRequest: "/auth/verify-request", // (used for check email message)
     newUser: "/auth/new-user", // New users will be directed here on first sign in (leave the property out if not of interest)
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      // Persist the OAuth access_token and or the user id to the token right after signin
+      return { ...token, ...user };
+    },
+    async session({ session, token }) {
+      // Send properties to the client, like an access_token and user id from a provider.
+      return { ...session, mobile: token.mobile, id: token.id };
+    },
   },
 };
 
