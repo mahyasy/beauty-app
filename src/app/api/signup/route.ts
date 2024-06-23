@@ -9,12 +9,11 @@ export async function POST(request: NextRequest) {
   try {
     //connect DB
     await connectDB();
-
     const body = await request.json();
-    const { mobile, password }: { mobile: string; password: string } = body;
+    const { mobile, password, name }: { mobile: string; password: string, name: string } = body;
 
     //check body
-    if (!mobile || !password) {
+    if (!mobile || !password || !name) {
       return NextResponse.json(
         { error: "مقادیر معتبر وارد کنید" },
         { status: 422 }
@@ -42,12 +41,13 @@ export async function POST(request: NextRequest) {
     const user = await User.create({
       mobile: mobileNumber,
       password: hashedPassord,
+      fullName: name
     });
 
     return NextResponse.json(
       {
         message: "حساب کاربری با موفقیت ایجاد شد",
-        data: { user: user.mobile },
+        data: { user: user.mobile, name: user.fullName },
       },
       { status: 201 }
     );
