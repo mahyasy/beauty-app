@@ -1,6 +1,7 @@
 import './ui/global.css'
 import Image from 'next/image';
 import Navbar from '../Components/Navbar';
+import { Toaster } from 'react-hot-toast';
 
 
 export const metadata = {
@@ -20,7 +21,7 @@ export default function RootLayout({
      <Image priority={true} className='left-leaf z-0' src='/leaf.jpg' width='75'  height='70' alt='leaf' />
      <Image   priority={true} className='right-leaf z-0' src='/leaf.jpg' width='75' height='70' alt='leaf' />
         {children}
-     
+        <Toaster/>
         </body>
     </html>
   )
