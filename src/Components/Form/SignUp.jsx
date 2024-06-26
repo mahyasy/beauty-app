@@ -36,10 +36,14 @@ export default function SignUp() {
   const submitHandler = async () => {
     const res = await fetch("/api/signup", {
       method: "POST",
-      body: JSON.stringify(form),
+      body: JSON.stringify({
+        username: form.name,
+        mobile: form.mobile,
+        password: form.password,
+      }),
       headers: { "Content-Type": "application/json" },
     });
-    setTimeout(() => router.replace("/Login"), 2000);
+    // setTimeout(() => router.replace("/Login"), 2000);
     const data = await res.json();
     console.log(data);
     if (data.error) toast.error(data.error);
@@ -63,8 +67,8 @@ export default function SignUp() {
             onChange={handleChange}
             onFocus={focusHandler}
             style={{
-            borderColor: err.name && focus.name ? 'red':''
-              }}
+              borderColor: err.name && focus.name ? "red" : "",
+            }}
           />
           {err.name && focus.name && (
             <span className="text-sm relative text-red ">{err.name}</span>

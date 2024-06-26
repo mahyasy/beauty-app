@@ -32,8 +32,8 @@ export default function SignIn() {
   };
   const LoginHandler = async () => {
     const res = await signIn("credentials", {
-      name: "",
-      password: "",
+      username: form.name,
+      password: form.password,
       redirect: false,
     });
     if (res.error) {
