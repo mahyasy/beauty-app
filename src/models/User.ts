@@ -2,6 +2,11 @@ import { model, models, Schema } from "mongoose";
 
 const userSchema = new Schema(
   {
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     mobile: {
       type: String,
       reqired: true,
