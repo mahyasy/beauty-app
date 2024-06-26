@@ -10,10 +10,14 @@ export async function POST(request: NextRequest) {
     //connect DB
     await connectDB();
     const body = await request.json();
-    const { mobile, password, name }: { mobile: string; password: string, name: string } = body;
+    const {
+      mobile,
+      password,
+      username,
+    }: { mobile: string; password: string; username: string } = body;
 
     //check body
-    if (!mobile || !password || !name) {
+    if (!mobile || !password || !username) {
       return NextResponse.json(
         { error: "مقادیر معتبر وارد کنید" },
         { status: 422 }
@@ -27,10 +31,11 @@ export async function POST(request: NextRequest) {
 
     //check existing
     const existingUser = await User.findOne({ mobile: mobileNumber });
-    if (existingUser) {
+    const existingUserByUsername = await User.findOne({ username });
+    if (existingUser || existingUserByUsername) {
       return NextResponse.json(
         {
-          error: "حساب کاربری با این شماره موبایل از قبل وجود دارد",
+          error: "حساب کاربری از قبل وجود دارد",
         },
         { status: 422 }
       );
@@ -41,13 +46,13 @@ export async function POST(request: NextRequest) {
     const user = await User.create({
       mobile: mobileNumber,
       password: hashedPassord,
-      fullName: name
+      username,
     });
 
     return NextResponse.json(
       {
         message: "حساب کاربری با موفقیت ایجاد شد",
-        data: { user: user.mobile, name: user.fullName },
+        data: { user: user.mobile, username: user.username },
       },
       { status: 201 }
     );

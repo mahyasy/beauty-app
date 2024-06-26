@@ -11,27 +11,28 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {},
-      async authorize(credentials: { mobile: string; password: string }) {
-        const { mobile, password } = credentials;
+      async authorize(credentials: { username: string; password: string }) {
+        const { username, password } = credentials;
         try {
           await connectDB();
         } catch (error) {
           throw new Error("مشکلی در سرور رخ داد");
         }
 
-        if (!mobile || !password) throw new Error("مقادیر معتبر وارد کنید");
+        if (!username || !password) throw new Error("مقادیر معتبر وارد کنید");
 
-        const user = await User.findOne({ mobile });
+        const user = await User.findOne({ username });
         if (!user) throw new Error("حساب کاربری یافت نشد");
 
         const verify = await verifyPassword(password, user.password);
-        if (!verify) throw new Error("شماره یا رمز اشتباه است");
+        if (!verify) throw new Error("نام کاربری یا رمز اشتباه است");
 
         return {
           id: user._id,
           name: user?.name,
           role: user.role,
           mobile: user.mobile,
+          username: user.username,
         };
       },
     }),
@@ -50,7 +51,7 @@ export const authOptions: NextAuthOptions = {
     },
     async session({ session, token }) {
       // Send properties to the client, like an access_token and user id from a provider.
-      return { ...session, mobile: token.mobile, id: token.id };
+      return { ...session, mobile: token.mobile, username: token.username, id: token.id };
     },
   },
 };
