@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { validform } from "./validform";
 import { signIn } from "next-auth/react";
 import toast from "react-hot-toast";
+import Spiner from "./Spiner";
 
 export default function SignIn() {
   const [form, setForm] = useState({
@@ -13,6 +14,7 @@ export default function SignIn() {
     password: "",
   });
   const [err, setErr] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const [focus, setfocus] = useState({
     name: false,
@@ -31,6 +33,7 @@ export default function SignIn() {
     setfocus((prevState) => ({ ...prevState, [e.target.name]: true }));
   };
   const LoginHandler = async () => {
+    setLoading(true);
     const res = await signIn("credentials", {
       username: form.name,
       password: form.password,
@@ -41,6 +44,7 @@ export default function SignIn() {
     } else {
       toast.success("ورود انجام شد");
     }
+    setLoading(false);
   };
 
   return (
@@ -77,12 +81,18 @@ export default function SignIn() {
             <span className="text-sm relative text-red ">{err.password}</span>
           )}
         </div>
-        <button
-          onClick={LoginHandler}
-          className="bg-pink mt-3 text-white rounded-full  py-2"
-        >
-          ثبت نام
-        </button>
+        {loading ? (
+          <button className="bg-pink py-2 rounded-full">
+            <Spiner w="w-5" h="h-5" border="border-[3px]" />
+          </button>
+        ) : (
+          <button
+            onClick={LoginHandler}
+            className="bg-pink mt-3 text-white rounded-full  py-2"
+          >
+            ورود
+          </button>
+        )}
       </div>
     </Form>
   );

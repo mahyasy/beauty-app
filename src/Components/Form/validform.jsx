@@ -3,9 +3,9 @@ const validform = (form, type) => {
   const phoneRegx = /^(\+98|0)?9\d{9}$/g;
 
   if (form.name === "") {
-    err.name = "لطفا نام را وارد کنید ";
+    err.name = "لطفا نام کاربری را وارد کنید ";
   } else if (form.name.length <= 2) {
-    err.name = "نام را کامل کنید";
+    err.name = "نام کاربری را کامل کنید";
   } else {
     delete err.name;
   }

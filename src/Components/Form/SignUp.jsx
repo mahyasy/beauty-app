@@ -6,6 +6,7 @@ import { FcCheckmark } from "react-icons/fc";
 import toast from "react-hot-toast";
 import { validform } from "./validform";
 import { useRouter } from "next/navigation";
+import Spiner from "./Spiner";
 
 export default function SignUp() {
   const router = useRouter();
@@ -14,6 +15,8 @@ export default function SignUp() {
     password: "",
     mobile: "",
   });
+  const [loading, setLoading] = useState(false);
+
   const [err, setErr] = useState({});
 
   const [focus, setfocus] = useState({
@@ -34,6 +37,7 @@ export default function SignUp() {
   };
 
   const submitHandler = async () => {
+    setLoading(true);
     const res = await fetch("/api/signup", {
       method: "POST",
       body: JSON.stringify({
@@ -47,7 +51,11 @@ export default function SignUp() {
     const data = await res.json();
     console.log(data);
     if (data.error) toast.error(data.error);
-    if (data.message) toast.success(data.message);
+    if (data.message) {
+      toast.success(data.message);
+      router.replace("/Login");
+    }
+    setLoading(false);
   };
 
   return (
@@ -102,12 +110,18 @@ export default function SignUp() {
           )}
         </div>
 
-        <button
-          onClick={submitHandler}
-          className="bg-pink  text-white rounded-full  py-2"
-        >
-          ثبت نام
-        </button>
+        {loading ? (
+          <button className="bg-pink rounded-full  py-2">
+            <Spiner w="w-5" h="h-5" border="border-[3px]" />
+          </button>
+        ) : (
+          <button
+            onClick={submitHandler}
+            className="bg-pink  text-white rounded-full  py-2"
+          >
+            ثبت نام
+          </button>
+        )}
       </div>
     </Form>
   );
