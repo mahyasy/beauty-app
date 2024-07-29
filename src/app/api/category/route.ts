@@ -60,7 +60,7 @@ export async function GET() {
 
     const categories = await Category.find();
 
-    return NextResponse.json({ data: categories }, { status: 200 });
+    return NextResponse.json( [categories] , { status: 200 });
   } catch (error) {
     console.log(error.message);
     return NextResponse.json(
