@@ -4,15 +4,11 @@ import { GoTrash } from "react-icons/go";
 import { CiEdit } from "react-icons/ci";
 
 const Services = ({service,setService}) => {
-  const handleDelete =()=>{
-    setService(
-      (prev)=>prev.filter((item)=>item.id !== service.id)
-    )
 
-  }
+  
   return (
     <div>
-{service.map((item,index)=>(
+{service.data?.map((item,index)=>(
     <div key={index}>
                   <section
  
@@ -26,12 +22,12 @@ const Services = ({service,setService}) => {
               alt={item.name}
               property="false"
             />
-            <h1 className="m-1 text-[12px] font-bold">{item.faName}</h1>
-            <button className="bg-pink rounded-lg text-[10px] break-words w-12 text-white">
+            <h1 className="m-1 text-[12px] font-bold ">{item.faName}</h1>
+            <button className="bg-pink rounded-lg text-[10px] break-words w-12 text-white ">
               مشاهده جزییات
             </button>
             <span className='relative top-10 '>
-        <button onClick={handleDelete} className='bg-red text-white mx-3 p-1 rounded-lg'>
+        <button className='bg-red text-white mx-3 p-1 rounded-lg'>
           <GoTrash/>
         </button>
         <button className='bg-gray text-white mx-3 mt-2 p-1 rounded-lg'>
