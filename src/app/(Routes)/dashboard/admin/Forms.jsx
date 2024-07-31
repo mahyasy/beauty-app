@@ -1,23 +1,13 @@
-import React from 'react'
-import Form from "../../../../../beauty-app/src/Components/Form";
+import React from 'react';
+import Form from '@/Components/Form'
 
 
-const Forms = ({service,setService}) => {
-  const handleSub=(e)=>{
-    e.preventDefault();
-    const name = e.target.service.value;
-    const newService = {
-      id:self.crypto.randomUUID(),
-      faName:name
 
+const Forms = () => {
 
-    }
-    setService((prev)=>[...prev,newService])
-
-  }
   return (
     <Form title="داشبورد" href="" icon="">
-      <form onSubmit={handleSub} className="flex flex-col items-center">
+      <form  className="flex flex-col items-center">
       <input
             className="rounded-full p-2 w-[170px]"
             placeholder="نام خدمات"
