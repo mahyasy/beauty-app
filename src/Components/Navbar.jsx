@@ -9,6 +9,7 @@ import { FcPhone } from "react-icons/fc";
 import { FcInfo } from "react-icons/fc";
 import { FcHome } from "react-icons/fc";
 import { HiScissors } from "react-icons/hi2";
+import { ImUndo2 } from "react-icons/im";
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -28,7 +29,14 @@ const Navbar = () => {
     <div>
       <section className="flex sm:hidden  justify-between w-100 mx-4 mt-3 text-2xl ">
         <Menu/>
-        <Register/>
+        {pathname === '/Details' ?(
+            
+            <ImUndo2 className='text-brown'/>
+  
+            ):(
+              <Register/>
+            )}
+       
 
       </section>
       <section className="hidden md:flex justify-between p-6 select-none">
@@ -47,9 +55,17 @@ const Navbar = () => {
         </nav>
        
         <aside className="ml-10 bg-pink p-3 rounded-lg ">
-          <Link href='/register'  className="text-[color:white]" >
+          {pathname === '/Details' ?(
+            
+          <ImUndo2 className='text-white'/>
+
+          ):(
+            <Link href='/register'  className="text-[color:white]" >
             ورود/ثبت نام
           </Link>
+
+          )}
+         
           
         </aside>
       </section>
