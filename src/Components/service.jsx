@@ -1,13 +1,14 @@
+"use client";
 import Image from "next/image";
 
 export default function Service() {
   const service = [
-    { id: 1, name: "ناخن", src: "/nail.jpg" },
-    { id: 2, name: "کوتاهی", src: "/haircut.jpg" },
-    { id: 3, name: "مژه", src: "/eyelash.jpg" },
-    { id: 4, name: "صافی و احیا", src: "/hair.jpg" },
-    { id: 5, name: "صافی و احیا", src: "/hair.jpg" },
-    { id: 6, name: "صافی و احیا", src: "/hair.jpg" },
+    { id: self.crypto.randomUUID(), name: "ناخن", src: "/nail.jpg" },
+    { id: self.crypto.randomUUID(), name: "کوتاهی", src: "/haircut.jpg" },
+    { id: self.crypto.randomUUID(), name: "مژه", src: "/eyelash.jpg" },
+    { id: self.crypto.randomUUID(), name: "صافی و احیا", src: "/hair.jpg" },
+    { id: self.crypto.randomUUID(), name: "صافی و احیا", src: "/hair.jpg" },
+    { id: self.crypto.randomUUID(), name: "صافی و احیا", src: "/hair.jpg" },
   ];
 
   return (
