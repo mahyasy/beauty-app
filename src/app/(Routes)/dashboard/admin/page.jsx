@@ -20,6 +20,7 @@ export default function Admin() {
 
   return (
     <div className="flex flex-col items-center md:flex-row-reverse justify-around md:items-start">
+      {/*<Forms/> */}
       <DetailFrom service={service} />
       <Services service={service} setService={setservice} />
     </div>

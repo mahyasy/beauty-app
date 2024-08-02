@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import Detail from './Detail';
+import Detail from '../../services/Detail';
 
 const page = () => {
   return (
