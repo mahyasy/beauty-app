@@ -10,13 +10,12 @@ export async function POST(request: NextRequest) {
     const {
       name,
       faName,
-      description,
       images,
-    }: { name: string; faName: string; images: string[]; description: string } = body;
+    }: { name: string; faName: string; images: string[] } = body;
 
     await checkAdmin();
 
-    if (!name || !faName || !description) {
+    if (!name || !faName) {
       return NextResponse.json(
         { error: "مقادیر معتبر وارد کنید" },
         { status: 422 }
@@ -36,7 +35,6 @@ export async function POST(request: NextRequest) {
       name: name.toLowerCase(),
       faName,
       images,
-      description
     });
 
     console.log(category);
@@ -60,7 +58,7 @@ export async function GET() {
 
     const categories = await Category.find();
 
-    return NextResponse.json( { data: categories } , { status: 200 });
+    return NextResponse.json({ data: categories }, { status: 200 });
   } catch (error) {
     console.log(error.message);
     return NextResponse.json(
@@ -80,12 +78,11 @@ export async function PATCH(request: NextRequest) {
       name,
       faName,
       images,
-      description
-    }: { name: string; faName: string; images: string[]; id: string; description: string } = body;
+    }: { name: string; faName: string; images: string[]; id: string } = body;
 
     await checkAdmin();
 
-    if (!name || !faName || !description) {
+    if (!name || !faName) {
       return NextResponse.json(
         { error: "فیلد ها نمیتواند خالی باشد" },
         { status: 422 }
@@ -104,7 +101,6 @@ export async function PATCH(request: NextRequest) {
     category.name = name;
     category.faName = faName;
     category.images = images;
-    category.description = description;
     await category.save();
 
     return NextResponse.json(
