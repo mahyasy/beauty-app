@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import connectDB from "../../../utils/connectDB";
 import Category from "../../../models/Category";
 import { checkAdmin } from "../../../utils/apiUtils";
+import { Schema } from "mongoose";
 
 export async function POST(request: NextRequest) {
   try {
@@ -11,7 +12,12 @@ export async function POST(request: NextRequest) {
       name,
       faName,
       images,
-    }: { name: string; faName: string; images: string[] } = body;
+      subCategory,
+    }: { name: string; faName: string; images: string[]; subCategory: string } =
+      body;
+    let parentCategory: Schema.Types.ObjectId = null;
+
+    console.log({name, faName, images, subCategory});
 
     await checkAdmin();
 
@@ -31,10 +37,23 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    if (subCategory) {
+      const category = await Category.findOne({ _id: subCategory });
+      if (!category) {
+        return NextResponse.json(
+          { error: "دسته بندی مود نظر برای دسته بندی پرنت یافت نشد" },
+          { status: 422 }
+        );
+      }
+
+      parentCategory = category;
+    }
+
     const category = await Category.create({
       name: name.toLowerCase(),
       faName,
       images,
+      parentCategory,
     });
 
     console.log(category);
@@ -44,7 +63,7 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
-    console.log(error.message);
+    console.log("error:", error.message);
     return NextResponse.json(
       { error: "مشکلی در سرور رخ داد" },
       { status: 500 }

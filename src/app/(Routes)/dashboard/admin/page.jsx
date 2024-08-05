@@ -1,28 +1,22 @@
-"use client";
 
-import { useState, useEffect } from "react";
-import Forms from "./Forms";
-import Services from "./Services";
-import DetailFrom from "./DetailFrom";
+import Categories from "./Categories";
+import connectDB from "@/utils/connectDB";
+import Category from "@/models/Category";
+import FormSection from "./FormSection";
+import { Interface } from "readline";
 
-export default function Admin() {
-  const [service, setservice] = useState([]);
 
-  useEffect(() => {
-    fetch("/api/category")
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setservice(data);
-      });
-  }, []);
+
+export default async function Admin() {
+  await connectDB();
+  const categories = await Category.find();
 
   return (
-    <div className="flex flex-col items-center md:flex-row-reverse justify-around md:items-start">
-      {/*<Forms/> */}
-      <DetailFrom service={service} />
-      <Services service={service} setService={setservice} />
+    <div>
+      <FormSection categories={JSON.parse(JSON.stringify(categories))} />
+      <div className="w-1/2">
+        <Categories service={JSON.parse(JSON.stringify(categories))} />
+      </div>
     </div>
   );
 }

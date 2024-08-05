@@ -1,8 +1,7 @@
 import Form from "@/Components/Form";
 import React from "react";
 
-const DetailFrom = ({ service }) => {
-  console.log(service, "mshy");
+const ServicesForm = ({ service }) => {
   return (
     <div>
       <Form title="داشبورد" href="" icon="">
@@ -12,8 +11,8 @@ const DetailFrom = ({ service }) => {
               id="services"
               className="bg-gray-50 w-20  text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
-              {service.data?.map((item, index) => (
-                <option key={index} value={item.name}>
+              {service.map((item, index) => (
+                <option key={index} value={item.id}>
                   {item.faName}
                 </option>
               ))}
@@ -82,4 +81,4 @@ const DetailFrom = ({ service }) => {
   );
 };
 
-export default DetailFrom;
+export default ServicesForm;

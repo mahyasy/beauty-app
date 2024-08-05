@@ -2,14 +2,16 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../app/api/auth/[...nextauth]/route";
 import User from "../models/User";
 import { NextResponse } from "next/server";
-import { redirect } from "next/navigation";
 
 export async function checkAdmin() {
   const session: any = await getServerSession(authOptions);
   console.log(session);
 
   if (!session) {
-    redirect("/");
+    return NextResponse.json(
+      { error: "وارد حساب خود شوید" },
+      { status: 401 }
+    );
   }
 
   const user = await User.findOne({ mobile: session.mobile });
