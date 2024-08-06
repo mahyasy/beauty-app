@@ -53,18 +53,18 @@ const CategoryForm = ({ category }) => {
           placeholder="نام انگلیسی دسته بندی"
           name="name"
         />
-        <select name="subCategory" id="subCategory" className="my-3">
-          <option selected disabled value="default">
-            {" "}
-            دسته بندی والد
-          </option>
-          {category &&
-            category.map((item) => (
-              <option key={item._id} value={item._id}>
-                {item.faName}
-              </option>
-            ))}
-        </select>
+        <label htmlFor="subCategory">
+          <span>دسته بندی والد:</span>
+          <select name="subCategory" id="subCategory" className="my-3">
+            <option value="">بدون والد</option>
+            {category &&
+              category.map((item) => (
+                <option key={item._id} value={item._id}>
+                  {item.faName}
+                </option>
+              ))}
+          </select>
+        </label>
         <div className="flex items-center justify-center  py-3 rounded-lg ">
           <label>
             <input type="file" hidden name="images" accept="image/*" />
