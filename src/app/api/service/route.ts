@@ -40,7 +40,6 @@ export async function POST(req: NextRequest) {
       !name ||
       !faName ||
       !description ||
-      !Array.isArray(subServices) ||
       !price ||
       !category ||
       !duration
@@ -53,7 +52,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const existingService = await Service.findOne({ name: name.toLowerCase() });
+    const existingService = await Service.findOne({ name: name.toLowerCase().trim() });
     if (existingService) {
       return NextResponse.json(
         {
@@ -75,21 +74,21 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if (subServices.length !== 0) {
-      subServices.map(async (item) => {
-        console.log(item);
+    // if (subServices.length !== 0) {
+    //   subServices.map(async (item) => {
+    //     console.log(item);
 
-        const service = await Service.findOne({ _id: item });
-        if (!service) {
-          return NextResponse.json(
-            { error: "سرویس مود نظر برای ساب سرویس یافت نشد" },
-            { status: 422 }
-          );
-        }
+    //     const service = await Service.findOne({ _id: item });
+    //     if (!service) {
+    //       return NextResponse.json(
+    //         { error: "سرویس مود نظر برای ساب سرویس یافت نشد" },
+    //         { status: 422 }
+    //       );
+    //     }
 
-        subObjectId.push(service);
-      });
-    }
+    //     subObjectId.push(service);
+    //   });
+    // }
 
     const service = await Service.create({
       name: name.toLowerCase(),
@@ -98,7 +97,6 @@ export async function POST(req: NextRequest) {
       price: +price,
       images,
       category: existingCategory._id,
-      subServices,
       duration,
     });
 
