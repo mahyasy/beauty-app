@@ -1,58 +1,210 @@
+import { fetchCategoty, revalidatePathAction } from "@/actions/actions";
 import Form from "@/Components/Form";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
-const ServicesForm = ({ service }) => {
+const ServicesForm = ({ category }) => {
+  const [form, setForm] = useState({
+    name: "",
+    faName: "",
+    description: "",
+    price: "",
+    images: [],
+    category: "", //finally
+    duration: 0,
+  });
+
+  const [subCategories, setSubCategories] = useState({ sub1: [] });
+
+  const [selectedMainCategory, setSelectedMainCategory] = useState(null);
+  const [selectedSubCategory, setSelectedSubCategory] = useState({ sub1: "" });
+
+  useEffect(() => {
+    setForm({ ...form, category: selectedMainCategory });
+    const fetch = async () => {
+      const res = await fetchCategoty(selectedMainCategory);
+      if (res?.data && res?.data.length !== 0) {
+        setSubCategories({ sub1: res?.data });
+      }
+    };
+    fetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedMainCategory]);
+
+  useEffect(() => {
+    const keys = Object.keys(selectedSubCategory);
+    // const filteredKeys = keys.filter(item => item.length !==)
+    const latest = selectedSubCategory[keys[keys.length - 1]];
+    if (!latest) {
+      setForm({ ...form, category: selectedMainCategory });
+      return;
+    }
+    setForm({ ...form, category: latest });
+    const fetch = async () => {
+      const res = await fetchCategoty(latest);
+      if (res.data) {
+        setSubCategories({
+          ...subCategories,
+          [`sub${keys.length + 1}`]: res.data,
+        });
+      }
+    };
+    fetch();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedSubCategory]);
+
+  const handleMainCategoryChange = (event) => {
+    setSelectedMainCategory(event.target.value);
+    setSelectedSubCategory({ sub1: "" }); // Reset sub category
+    setSubCategories({ sub1: [] });
+  };
+
+  const handleSubCategoryChange = (event, index) => {
+    const prevState = { ...subCategories };
+
+    for (let i = 20; i > index + 1; i--) {
+      if (i === index) break;
+      delete prevState[`sub${i}`];
+    }
+    setSubCategories({
+      ...prevState,
+    });
+    if (index === 0) {
+      setSelectedSubCategory({
+        [`sub${index + 1}`]: event.target.value,
+      });
+    } else {
+      setSelectedSubCategory({
+        ...selectedSubCategory,
+        [`sub${index + 1}`]: event.target.value,
+      });
+    }
+  };
+
+  const inputChangeHandler = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    console.log(form);
+
+    const res = await fetch("/api/service", {
+      method: "POST",
+      body: JSON.stringify(form),
+      headers: { "Content-Type": "application/json" },
+    });
+    const data = await res.json();
+
+    if (data.error) toast.error(data.error);
+    if (data.message) {
+      toast.success(data.message);
+      setForm({
+        name: "",
+        faName: "",
+        description: "",
+        price: "",
+        images: [],
+        category: "",
+        duration: 0,
+      });
+      setSelectedSubCategory({ sub1: "" });
+      setSelectedMainCategory("");
+      setSubCategories({ sub1: [] });
+    }
+    revalidatePathAction("/dashboard/admin");
+  };
+
   return (
     <div>
       <Form title="داشبورد" href="" icon="">
-        <form className="max-w-sm mx-auto flex flex-col ">
-          <span className="flex">
-            <select
-              id="services"
-              className="bg-gray-50 w-20  text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            >
-              {service.map((item, index) => (
-                <option key={index} value={item.id}>
-                  {item.faName}
-                </option>
-              ))}
-            </select>
+        <form
+          className="max-w-sm mx-auto flex flex-col"
+          onSubmit={submitHandler}
+        >
+          <span className="flex flex-col">
             <input
               className="rounded-lg p-1 w-[170px]"
-              placeholder="نام دسته"
-              name="service"
-              id="service"
+              placeholder="نام سرویس"
+              name="faName"
+              value={form.faName}
+              onChange={inputChangeHandler}
+            />
+            <input
+              className="rounded-lg p-1 w-[170px]"
+              placeholder="نام انگلیسی"
+              name="name"
+              value={form.name}
+              onChange={inputChangeHandler}
             />
           </span>
           <span className="flex justify-between my-6">
             <input
-              className="rounded-lg p-2 w-[70px] text-xs"
-              placeholder="نام زیردسته"
-              name="service"
-              id="service"
-            />
-            <input
               className="rounded-lg p-2 w-[70px]"
               placeholder="قیمت"
-              name="service"
-              id="service"
+              name="price"
+              value={form.price}
+              onChange={inputChangeHandler}
             />
             <input
               className="rounded-lg p-2 w-[70px]"
               placeholder="زمان"
-              name="service"
-              id="service"
+              name="duration"
+              value={form.duration}
+              onChange={inputChangeHandler}
             />
           </span>
+          <label htmlFor="subCategory">
+            <span>دسته بندی :</span>
+            <select
+              name="category"
+              id="category"
+              className="my-3"
+              onChange={handleMainCategoryChange}
+              defaultValue="default"
+            >
+              <option value={""} id="default" name="default">
+                هیچ کدام
+              </option>
+              {category &&
+                category.map((item) => (
+                  <option key={item._id} value={item._id}>
+                    {item.faName}
+                  </option>
+                ))}
+            </select>
+          </label>
+
+          {Object.keys(subCategories).map((item, index) =>
+            subCategories[item] && subCategories[item].length ? (
+              <label key={index}>
+                <span>زیر دسته :</span>
+                <select
+                  name="subCategory"
+                  className="my-3"
+                  onChange={(e) => handleSubCategoryChange(e, index)}
+                  defaultValue="default"
+                >
+                  <option value={""} id="default" name="default">
+                    هیچ کدام
+                  </option>
+                  faName
+                  {subCategories[item] &&
+                    subCategories[item].map((item) => (
+                      <option key={item._id} value={item._id}>
+                        {item.faName}
+                      </option>
+                    ))}
+                </select>
+              </label>
+            ) : null
+          )}
+
           <span className="flex  justify-center    ">
             <label>
-              <input
-                type="file"
-                hidden
-                name="picture"
-                id="picture"
-                accept="image/*"
-              />
+              <input type="file" hidden name="image" />
               <div
                 className="w-40 aspect-video rounded flex items-center
       justify-center border-2 border-dashed border-gray cursor-pointer
@@ -68,10 +220,16 @@ const ServicesForm = ({ service }) => {
             <textarea
               className="bg-cream bg-opacity-10  text-center border border-gray rounded-lg p-8 "
               placeholder="توضیحات"
+              name="description"
+              value={form.description}
+              onChange={inputChangeHandler}
             ></textarea>
           </span>
           <span className="flex  justify-center  bg-transparent  ">
-            <button className="bg-pink  text-white  rounded-full w-[170px]  py-2">
+            <button
+              type="submit"
+              className="bg-pink  text-white  rounded-full w-[170px]  py-2"
+            >
               ثبت خدمات
             </button>
           </span>
