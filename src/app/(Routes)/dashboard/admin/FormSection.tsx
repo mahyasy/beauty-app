@@ -43,7 +43,7 @@ const FormSection = ({ categories }) => {
           <CategoryForm category={JSON.parse(JSON.stringify(categories))} />
         )}
         {state === "service" && (
-          <ServicesForm service={JSON.parse(JSON.stringify(categories))} />
+          <ServicesForm category={JSON.parse(JSON.stringify(categories))} />
         )}
       </div>
     </div>
