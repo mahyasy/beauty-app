@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 const Item = ({ item, setService }) => {
   return (
@@ -22,9 +23,9 @@ const Item = ({ item, setService }) => {
         )}
       </div>
       <h1 className="m-1 text-[12px] font-bold">{item.faName}</h1>
-      <button className="bg-pink rounded-lg text-[10px] break-words w-12 text-white">
+      <Link href={`/dashboard/admin/category/${item._id}`} className="bg-pink rounded-lg text-[10px] break-words w-12 text-white">
         مشاهده جزییات
-      </button>
+      </Link>
     </section>
   );
 };
