@@ -6,7 +6,7 @@ import ServicesForm from "./ServicesForm";
 
 type State = "category" | "service";
 
-const FormSection = ({ categories }) => {
+const FormSection = ({ categories, allCategories }) => {
   const [state, setState] = useState<State>("category");
 
   const handler = (type: "category" | "service") => {
@@ -40,7 +40,7 @@ const FormSection = ({ categories }) => {
       </div>
       <div className="flex justify-center items-center">
         {state === "category" && (
-          <CategoryForm category={JSON.parse(JSON.stringify(categories))} />
+          <CategoryForm category={JSON.parse(JSON.stringify(allCategories))} />
         )}
         {state === "service" && (
           <ServicesForm category={JSON.parse(JSON.stringify(categories))} />
