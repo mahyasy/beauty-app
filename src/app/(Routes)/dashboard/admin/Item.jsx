@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-const Item = ({ item, setService }) => {
+const Item = ({ item }) => {
   return (
     <section
       key={item.id}
