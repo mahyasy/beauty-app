@@ -1,4 +1,4 @@
-import { models, model, Schema } from "mongoose";
+import { models, model, Schema, InferSchemaType, Types } from "mongoose";
 
 // const typeSchema = new Schema({
 //   name: {
@@ -62,4 +62,9 @@ const serviceSchema = new Schema(
 
 const Service = models.Service || model("Service", serviceSchema);
 
+type ServiceType = InferSchemaType<typeof serviceSchema> & {
+  _id: string | Types.ObjectId;
+};
+
 export default Service;
+export type { ServiceType };
