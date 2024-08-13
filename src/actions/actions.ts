@@ -9,8 +9,8 @@ export const redirectTo = (path: string) => {
   redirect(path);
 };
 
-export const revalidatePathAction = (path: string) => {
-  revalidatePath(path);
+export const revalidatePathAction = (path: string, layout: "page" | "layout" = "page") => {
+  revalidatePath(path, layout);
 };
 
 export const revalidateTagAction = (tag: string) => {
