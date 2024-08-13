@@ -18,7 +18,6 @@ const CategoryForm = ({ category }) => {
   const [form, setForm] = useState({
     name: "",
     faName: "",
-    subCategory: "",
     images: [],
   });
 
