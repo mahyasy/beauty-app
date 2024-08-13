@@ -1,12 +1,13 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import DeleteButton from "@/Components/modules/DeleteButton";
 
 const Item = ({ item }) => {
   return (
     <section
       key={item.id}
-      className="border border-brown m-8 xs:m-4  flex flex-col items-center   rounded-t-full w-[120px] h-40 z-20 "
+      className="border border-brown m-8 xs:m-4  flex flex-col items-center   rounded-t-full w-[200px] h-60 z-20 "
     >
       <div className="w-5/6 h-2/4 my-2">
         {item.src ? (
@@ -19,13 +20,24 @@ const Item = ({ item }) => {
             property="false"
           />
         ) : (
-          <div className="rounded-t-full bg-[#66BFBF] h-full w-110  flex justify-center items-center">بدون تصاویر</div>
+          <div className="rounded-t-full bg-[#66BFBF] h-full w-110  flex justify-center items-center">
+            بدون تصاویر
+          </div>
         )}
       </div>
       <h1 className="m-1 text-[12px] font-bold">{item.faName}</h1>
-      <Link href={`/dashboard/admin/category/${item._id}`} className="bg-pink rounded-lg text-[10px] break-words w-12 text-white">
-        مشاهده جزییات
-      </Link>
+      <div className="flex justify-center items-center pt-5 gap-2">
+        <Link
+          href={`/dashboard/admin/category/${item._id}`}
+          className="bg-pink rounded-lg text-[10px] break-words px-3 py-2 text-white"
+        >
+          مشاهده جزییات
+        </Link>
+        <DeleteButton id={JSON.parse(JSON.stringify(item._id))} />
+        <Link href={`/dashboard/admin/category/${item._id}/edit`} className="border-2 p-1 text-xs rounded-md-1 rounded-md">
+          ویرایش
+        </Link>
+      </div>
     </section>
   );
 };

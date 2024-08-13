@@ -5,8 +5,16 @@ import Form from "@/Components/Form";
 import toast from "react-hot-toast";
 import { revalidatePathAction, revalidateTagAction } from "@/actions/actions";
 
+import { Select } from "antd";
+
 const CategoryForm = ({ category }) => {
   console.log(category);
+  const option = category.map((item) => {
+    return {
+      value: item._id,
+      label: item.faName,
+    };
+  });
   const [form, setForm] = useState({
     name: "",
     faName: "",
@@ -35,39 +43,57 @@ const CategoryForm = ({ category }) => {
     if (data.error) toast.error(data.error);
     if (data.message) {
       toast.success(data.message);
-      revalidatePathAction("dashboard/admin");
-      revalidateTagAction;
+      revalidatePathAction("dashboard/admin", "layout");
+      setForm({
+        name: "",
+        faName: "",
+        subCategory: "",
+        images: [],
+      });
     }
+  };
+
+  const onChange = (value) => {
+    setForm({ ...form, subCategory: value });
   };
 
   return (
     <Form title="داشبورد" href="" icon="">
-      <form className="flex flex-col items-center" onChange={formChangeHandler}>
+      <form className="flex flex-col items-center">
         <input
           className="rounded-full p-2 w-[170px]"
           placeholder="نام دسته بندی"
           name="faName"
+          value={form.faName}
+          onChange={formChangeHandler}
         />
         <input
           className="rounded-full p-2 w-[170px]"
           placeholder="نام انگلیسی دسته بندی"
           name="name"
+          value={form.name}
+          onChange={formChangeHandler}
         />
-        <label htmlFor="subCategory">
-          <span>دسته بندی والد:</span>
-          <select name="subCategory" id="subCategory" className="my-3">
-            <option value="">بدون والد</option>
-            {category &&
-              category.map((item) => (
-                <option key={item._id} value={item._id}>
-                  {item.faName}
-                </option>
-              ))}
-          </select>
+        <label htmlFor="subCategory" className="py-4">
+          <span className="pl-3">دسته بندی والد:</span>
+          <Select
+            showSearch
+            placeholder="انتخاب دسته بندی"
+            optionFilterProp="label"
+            onChange={onChange}
+            // onSearch={onSearch}
+            options={option}
+          />
         </label>
         <div className="flex items-center justify-center  py-3 rounded-lg ">
           <label>
-            <input type="file" hidden name="images" accept="image/*" />
+            <input
+              type="file"
+              hidden
+              name="images"
+              accept="image/*"
+              onChange={formChangeHandler}
+            />
             <div
               className="w-40 aspect-video rounded flex items-center
       justify-center border-2 border-dashed border-gray cursor-pointer
