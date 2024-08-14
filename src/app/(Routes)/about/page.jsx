@@ -1,4 +1,9 @@
+import AboutLayout from "@/Components/About/AboutLayout";
 
-export default function service(){
-    return <h1>This is about page</h1>
+export default function About() {
+  return (
+    <div className="p-10">
+      <AboutLayout />
+    </div>
+  );
 }
