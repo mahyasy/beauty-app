@@ -7,6 +7,9 @@ module.exports = {
   ],
 
   theme: {
+    variants: {
+      flexDirection: ['responsive', 'even', 'hover', 'focus'],
+    },
     extend: {
       screens: {
         xs: { max: "414px" },
