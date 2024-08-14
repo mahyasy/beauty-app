@@ -29,13 +29,13 @@ const Menu = () => {
   if (isOpen) document.documentElement.scroll = "disable";
 
   return (
-    <div>
+    <div >
       <FiMenu
         onClick={TogglerHandler}
         className="text-brown drop-shadow-3xl  "
       />
       {isOpen && (
-        <nav  ref={ref} className="absolute flex flex-col justify-around   border border-brown/20  right-7 shadow-lg top-10 w-40 h-40 bg-cream z-30 rounded-lg">
+        <nav  ref={ref} className="absolute flex flex-col justify-around   border border-brown/20  right-7 shadow-lg top-10 w-40 h-40 bg-cream z-50 rounded-lg">
 
   {navLink.map((link)=>{
     return(

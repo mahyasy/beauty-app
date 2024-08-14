@@ -4,11 +4,11 @@ import Image from 'next/image'
 const page = () => {
   return (
     <div className='flex flex-wrap justify-around mt-24 items-center'>
-        <section className='bg-pink max-w-24 max-h-24 text-white drop-shadow-5xl p-10 rounded-lg'>
-         موقت
+        <section className='bg-pink flex justify-center items-center max-w-24 max-h-24 text-white drop-shadow-5xl p-10 rounded-lg'>
+         مژه موقت
         </section>
-        <section className='bg-pink text-center max-w-24 max-h-24 text-white drop-shadow-5xl p-10 rounded-lg'>
-         اکستنشن مزه
+        <section className='bg-pink text-center flex justify-center items-center max-w-24 max-h-24 text-white drop-shadow-5xl p-10 rounded-lg'>
+       اکستنشن مژه
         </section>
         
         
