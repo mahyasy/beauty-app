@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
       body;
     let parentCategory: Schema.Types.ObjectId = null;
 
-    console.log({name, faName, images, subCategory});
+    console.log({ name, faName, images, subCategory });
 
     await checkAdmin();
 
@@ -97,7 +97,14 @@ export async function PATCH(request: NextRequest) {
       name,
       faName,
       images,
-    }: { name: string; faName: string; images: string[]; id: string } = body;
+      parentCategory,
+    }: {
+      name: string;
+      faName: string;
+      images: string[];
+      id: string;
+      parentCategory: string;
+    } = body;
 
     await checkAdmin();
 
@@ -120,6 +127,11 @@ export async function PATCH(request: NextRequest) {
     category.name = name;
     category.faName = faName;
     category.images = images;
+    if (parentCategory === "") {
+      category.parentCategory = null;
+    } else {
+      category.parentCategory = parentCategory;
+    }
     await category.save();
 
     return NextResponse.json(

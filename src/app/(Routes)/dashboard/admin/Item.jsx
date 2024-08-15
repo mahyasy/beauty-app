@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import DeleteButton from "@/Components/modules/DeleteButton";
+import EditButton from "@/Components/modules/EditButton";
 
 const Item = ({ item }) => {
   return (
@@ -34,9 +35,7 @@ const Item = ({ item }) => {
           مشاهده جزییات
         </Link>
         <DeleteButton id={JSON.parse(JSON.stringify(item._id))} />
-        <Link href={`/dashboard/admin/category/${item._id}/edit`} className="border-2 p-1 text-xs rounded-md-1 rounded-md">
-          ویرایش
-        </Link>
+        <EditButton item={JSON.parse(JSON.stringify(item))}  />
       </div>
     </section>
   );

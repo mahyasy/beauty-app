@@ -8,7 +8,6 @@ import { revalidatePathAction, revalidateTagAction } from "@/actions/actions";
 import { Select } from "antd";
 
 const CategoryForm = ({ category }) => {
-  console.log(category);
   const option = category.map((item) => {
     return {
       value: item._id,
