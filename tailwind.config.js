@@ -23,7 +23,7 @@ module.exports = {
         gray: "#D3D3D3",
         white: "#ffffff",
         red: "#ff0000",
-        green: "#4FFFB0",
+     
       },
       dropShadow: {
         "3xl": "3px 3px 1px rgba(0, 0, 0, 0.30)",
