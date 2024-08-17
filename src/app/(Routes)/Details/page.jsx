@@ -8,7 +8,7 @@ const page = () => {
    
     <figure className='hidden md:block '>
     <Image
-            className="rounded-t-full ml-10 drop-shadow-5xl  md:w-[200px]  h-72"
+            className="rounded-t-full ml-10 drop-shadow-5xl  md:w-auto  h-72"
             src="/eyelash.jpg"
             width={200}
             priority={false}
