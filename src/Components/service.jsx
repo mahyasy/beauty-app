@@ -17,18 +17,20 @@ export default function Service() {
         return (
           <section
             key={serv.id}
-            className="border border-brown m-8 xs:m-4  flex flex-col items-center   rounded-t-full w-[120px] h-40  "
+            className="border border-brown m-8 xs:m-4  flex flex-col items-center p-10  rounded-t-full w-[120px] relative  h-40"
           >
             <Image
-              className="rounded-t-full mt-4 h-auto w-110 px-2"
+              className="rounded-t-full  h-20 w-110 px-2 absolute top-2"
               src={serv.src}
               width={100}
               height={190}
               alt={serv.name}
               property="false"
             />
-            <h1 className="m-1 text-[12px] font-bold">{serv.name}</h1>
-            <button className="bg-pink rounded-lg text-[10px] break-words w-12 text-white">
+            <h1 className="m-1 mt-10 py-4 text-nowrap  text-[12px] font-bold absolute  top-10">
+              {serv.name}
+            </h1>
+            <button className="bg-pink rounded-lg text-[10px] break-words w-12 absolute mt-20   text-white">
               مشاهده جزییات
             </button>
           </section>
