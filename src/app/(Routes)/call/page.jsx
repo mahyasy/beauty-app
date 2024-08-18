@@ -36,29 +36,23 @@ export default function call() {
     },
   ];
   return (
-    <div className="border border-brown md:border-none rounded-t-full m-10 flex flex-col  items-center ">
-      <h1 className="mt-4 text-lg">تماس با ما</h1>
-      <div className="flex m-8 flex-wrap  gap-2 justify-center  items-baseline ">
-        {data.map((item) => (
-          <section className="p-2 flex flex-col items-center ">
-            <Image
-              src={item.src}
-              alt={item.name}
-              className=" hover:scale-125 drop-shadow-5xl"
-              width={80}
-              height={80}
-            />
-            <span className=" flex text-center py-2  rounded-lg ">
-              <a className="text-wrap text-sm" href={item.link}>
-                {item.smallLink}
-              </a>
-              <p className="bg-pink  text-white relative right-0 rounded-l-full p-1">
-                {item.icon}
-              </p>
-            </span>
-          </section>
-        ))}
-      </div>
-    </div>
+<div className="flex justify-center">
+<section className="flex flex-col items-center  rounded-t-full  border border-brown p-10 w-70 h-auto">
+  <Image src='/logo.png' width={100} height={100} alt="shabgis" />
+  <h1 className="text-brown text-3xl font-extrabold">تماس با ما</h1>
+  <main className="flex flex-col items-end gap-4 m-10" >
+    {data.map((item)=>
+    <a href={item.link} className="flex" >
+      <p className="text-nowrap bg-brown text-white rounded-r-full ">{item.smallLink}</p>
+      <span className="bg-pink text-white rounded--full p-1" >{item.icon}</span>
+
+    </a>
+    
+    )}
+
+  </main>
+
+</section>
+</div>
   );
 }
