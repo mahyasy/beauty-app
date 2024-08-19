@@ -6,6 +6,7 @@ import Category, {
   CategoryType,
 } from "@/models/Category";
 import connectDB from "@/utils/connectDB";
+import ServiceItem from "../../ServiceItem";
 
 interface PropsInterface {
   params: { categoryId: string };
@@ -60,7 +61,7 @@ const Categorydetials = async ({ params }: PropsInterface) => {
             <h5>سرویسی در این دسته بندی موجود نیست</h5>
           )}
           {bySubServices[0].subServices.map((item) => (
-            <Item key={item._id as string} item={item} /> //change for item service
+            <ServiceItem key={item._id as string} item={item} /> 
           ))}
         </div>
       </div>
