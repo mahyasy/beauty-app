@@ -12,7 +12,7 @@ export default function Service() {
   ];
 
   return (
-    <div className="flex justify-around flex-wrap z-20 ">
+    <div className="flex justify-around md:justify-center flex-wrap z-20 ">
       {service.map((serv) => {
         return (
           <section
@@ -26,6 +26,7 @@ export default function Service() {
               height={190}
               alt={serv.name}
               property="false"
+              priority={true}
             />
             <h1 className="m-1 mt-10 py-4 text-nowrap  text-[12px] font-bold absolute  top-10">
               {serv.name}

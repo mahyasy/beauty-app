@@ -18,7 +18,7 @@ const page = () => {
     <figure className='hidden md:block '>
     <Image
             className="rounded-t-full drop-shadow-5xl h-auto  md:w-[150px] "
-            src="/seven.jpg"
+            src="/seven.png"
             width="105"
             priority={false}
             height="0"
