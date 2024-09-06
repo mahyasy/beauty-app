@@ -6,6 +6,7 @@ import { CategoryType } from "@/models/Category";
 import { FiChrome } from "react-icons/fi";
 import toast from "react-hot-toast";
 import { revalidatePathAction } from "@/actions/actions";
+import { CiEdit } from "react-icons/ci";
 
 const EditButton: React.FC = ({ item }: { item: CategoryType }) => {
   const [open, setOpen] = useState(false);
@@ -103,7 +104,7 @@ const EditButton: React.FC = ({ item }: { item: CategoryType }) => {
         style={{ fontSize: "12px" }}
         onClick={showModal}
       >
-        ویرایش
+       <CiEdit/>
       </Button>
       <Modal
         title={`ویرایش دسته بندی ${item.faName}`}

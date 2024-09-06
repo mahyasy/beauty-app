@@ -9,7 +9,7 @@ export default async function Admin() {
   const filtered = categories.filter((item) => !item.parentCategory);
 
   return (
-    <div>
+    <div className="flex flex-col items-center md:flex-row-reverse justify-around md:items-start" >
       <FormSection categories={JSON.parse(JSON.stringify(filtered))} allCategories={JSON.parse(JSON.stringify(categories))} />
       <div className="w-1/2">
         <div>

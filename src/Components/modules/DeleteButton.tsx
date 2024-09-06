@@ -3,6 +3,7 @@
 import { revalidatePathAction } from "@/actions/actions";
 import { useTransition } from "react";
 import toast from "react-hot-toast";
+import { IoTrash } from "react-icons/io5";
 
 const DeleteButton = ({ id }: { id: string }) => {
   const [isPending, startTransition] = useTransition();
@@ -25,11 +26,13 @@ const DeleteButton = ({ id }: { id: string }) => {
 
   return (
     <button
-      className={`border-2 p-1 text-xs rounded-md-1 border-[#FF4C4C] rounded-md ${isPending ? "opacity-80 cursor-not-allowed": ""}`}
+      className={` bg-red rounded-md text-lg p-1 text-white  ${
+        isPending ? "opacity-80 cursor-not-allowed" : ""
+      }`}
       onClick={deleteCategoryHandler}
       disabled={isPending}
     >
-      حذف
+      <IoTrash  />
     </button>
   );
 };

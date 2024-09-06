@@ -4,11 +4,14 @@ import Link from "next/link";
 import DeleteButton from "@/Components/modules/DeleteButton";
 import EditButton from "@/Components/modules/EditButton";
 
+
+
 const Item = ({ item }) => {
   return (
     <section
       key={item.id}
-      className="border border-brown m-8 xs:m-4  flex flex-col items-center   rounded-t-full w-[200px] h-60 z-20 "
+      className="border border-brown m-2 flex flex-col items-center py-2
+        rounded-t-full w-[180px] h-60 z-20 "
     >
       <div className="w-5/6 h-2/4 my-2">
         {item.src ? (
@@ -27,15 +30,17 @@ const Item = ({ item }) => {
         )}
       </div>
       <h1 className="m-1 text-[12px] font-bold">{item.faName}</h1>
-      <div className="flex justify-center items-center pt-5 gap-2">
+      <div className="flex flex-col items-center pt-5 gap-2">
         <Link
           href={`/dashboard/admin/category/${item._id}`}
           className="bg-pink rounded-lg text-[10px] break-words px-3 py-2 text-white"
         >
           مشاهده جزییات
         </Link>
+        <span className="flex justify-between gap-2">
         <DeleteButton id={JSON.parse(JSON.stringify(item._id))} />
         <EditButton item={JSON.parse(JSON.stringify(item))}  />
+        </span>
       </div>
     </section>
   );
