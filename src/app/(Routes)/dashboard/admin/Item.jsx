@@ -3,20 +3,24 @@ import Image from "next/image";
 import Link from "next/link";
 import DeleteButton from "@/Components/modules/DeleteButton";
 import EditButton from "@/Components/modules/EditButton";
+import supabase from "@/lib/supabase/supabase";
 
 const Item = ({ item }) => {
+  const {
+    data: { publicUrl },
+  } = supabase.storage.from("images2").getPublicUrl(item.images[0]);
   return (
     <section
       key={item.id}
       className="border border-brown m-8 xs:m-4  flex flex-col items-center   rounded-t-full w-[200px] h-60 z-20 "
     >
       <div className="w-5/6 h-2/4 my-2">
-        {item.src ? (
+        {item.images.length !== 0 ? (
           <Image
             className="rounded-t-full mt-4 h-auto w-110 px-2"
-            src={item.src}
-            width={100}
-            height={190}
+            src={publicUrl}
+            width={500}
+            height={500}
             alt={item.name}
             property="false"
           />
@@ -35,7 +39,7 @@ const Item = ({ item }) => {
           مشاهده جزییات
         </Link>
         <DeleteButton id={JSON.parse(JSON.stringify(item._id))} />
-        <EditButton item={JSON.parse(JSON.stringify(item))}  />
+        <EditButton item={JSON.parse(JSON.stringify(item))} />
       </div>
     </section>
   );

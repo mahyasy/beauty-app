@@ -1,9 +1,14 @@
 import { fetchCategoty, revalidatePathAction } from "@/actions/actions";
 import Form from "@/Components/Form";
-import React, { useEffect, useState } from "react";
+import supabase from "@/lib/supabase/supabase";
+import { Spin } from "antd";
+import Image from "next/image";
+import React, { useEffect, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 
 const ServicesForm = ({ category }) => {
+  const [isPending, startTransition] = useTransition();
+
   const [form, setForm] = useState({
     name: "",
     faName: "",
@@ -18,6 +23,7 @@ const ServicesForm = ({ category }) => {
 
   const [selectedMainCategory, setSelectedMainCategory] = useState(null);
   const [selectedSubCategory, setSelectedSubCategory] = useState({ sub1: "" });
+  const [filesURL, setFilesURL] = useState([]);
 
   useEffect(() => {
     setForm({ ...form, category: selectedMainCategory });
@@ -82,8 +88,28 @@ const ServicesForm = ({ category }) => {
     }
   };
 
-  const inputChangeHandler = (e) => {
+  const inputChangeHandler = async (e) => {
     const { name, value } = e.target;
+    const file = e.target.files[0];
+    const localImageUrl = URL.createObjectURL(file);
+    setFilesURL([localImageUrl]);
+
+    if (name === "images") {
+      startTransition(async () => {
+        const { data, error } = await supabase.storage
+          .from("images2")
+          .upload(
+            `images/${Math.floor(Math.random() * 10)}-${Date.now()}.png`,
+            file,
+            {
+              cacheControl: "3600",
+              upsert: false,
+            }
+          );
+        setForm({ ...form, images: [data.path] });
+        return;
+      });
+    }
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -113,6 +139,7 @@ const ServicesForm = ({ category }) => {
       setSelectedSubCategory({ sub1: "" });
       setSelectedMainCategory("");
       setSubCategories({ sub1: [] });
+      setFilesURL([]);
     }
     revalidatePathAction("/dashboard/admin");
   };
@@ -202,17 +229,34 @@ const ServicesForm = ({ category }) => {
             ) : null
           )}
 
-          <span className="flex  justify-center    ">
+          <span className="flex justify-center">
             <label>
-              <input type="file" hidden name="image" />
+              <input
+                type="file"
+                hidden
+                name="images"
+                onChange={inputChangeHandler}
+              />
               <div
                 className="w-40 aspect-video rounded flex items-center
       justify-center border-2 border-dashed border-gray cursor-pointer
       "
               >
-                <span className="flex items-center text-brown">
-                  بارگزاری عکس..
-                </span>
+                {filesURL.length === 0 ? (
+                  <span className="flex items-center text-brown">
+                    بارگزاری عکس..
+                  </span>
+                ) : (
+                  <Spin tip="Loading" spinning={isPending} size="small">
+                    <Image
+                      src={filesURL[0]}
+                      alt="img"
+                      width={500}
+                      height={500}
+                      className=" rounded-md"
+                    />
+                  </Spin>
+                )}
               </div>
             </label>
           </span>
@@ -227,6 +271,7 @@ const ServicesForm = ({ category }) => {
           </span>
           <span className="flex  justify-center  bg-transparent  ">
             <button
+              disabled={isPending}
               type="submit"
               className="bg-pink  text-white  rounded-full w-[170px]  py-2"
             >
