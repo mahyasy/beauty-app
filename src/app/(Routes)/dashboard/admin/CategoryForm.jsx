@@ -1,13 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useTransition } from "react";
 import Form from "@/Components/Form";
 import toast from "react-hot-toast";
-import { revalidatePathAction, revalidateTagAction } from "@/actions/actions";
+import { revalidatePathAction } from "@/actions/actions";
 
-import { Select } from "antd";
+import { Select, Spin } from "antd";
+import Image from "next/image";
+import supabase from "@/lib/supabase/supabase";
 
 const CategoryForm = ({ category }) => {
+  const [isPending, startTransition] = useTransition();
   const option = category.map((item) => {
     return {
       value: item._id,
@@ -19,14 +22,32 @@ const CategoryForm = ({ category }) => {
     faName: "",
     images: [],
   });
+  const [filesURL, setFilesURL] = useState([]);
 
-  const formChangeHandler = (e) => {
+  const formChangeHandler = async (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    console.log(value);
-    if (name === "images") return; //upload letter
+    const file = e.target.files[0];
+    const localImageUrl = URL.createObjectURL(file);
+    setFilesURL((prev) => [...prev, localImageUrl]);
 
-    setForm({ ...form, [name]: value });
+    startTransition(async () => {
+      if (name === "images") {
+        const { data, error } = await supabase.storage
+          .from("images2")
+          .upload(
+            `images/${Math.floor(Math.random() * 10)}-${Date.now()}.png`,
+            file,
+            {
+              cacheControl: "3600",
+              upsert: false,
+            }
+          );
+        setForm({ ...form, images: [data.path] });
+      }
+
+      setForm({ ...form, [name]: value });
+    });
   };
 
   const submitHandler = async (e) => {
@@ -48,6 +69,7 @@ const CategoryForm = ({ category }) => {
         subCategory: "",
         images: [],
       });
+      setFilesURL([]);
     }
   };
 
@@ -97,14 +119,27 @@ const CategoryForm = ({ category }) => {
       justify-center border-2 border-dashed border-gray cursor-pointer
       "
             >
-              <span className="flex items-center text-brown">
-                بارگزاری عکس..
-              </span>
+              {filesURL.length === 0 ? (
+                <span className="flex items-center text-brown">
+                  بارگزاری عکس..
+                </span>
+              ) : (
+                <Spin tip="Loading" spinning={isPending} size="small">
+                  <Image
+                    src={filesURL[0]}
+                    alt="img"
+                    width={500}
+                    height={500}
+                    className=" rounded-md"
+                  />
+                </Spin>
+              )}
             </div>
           </label>
         </div>
         <button
           type="button"
+          disabled={isPending}
           onClick={submitHandler}
           className="bg-pink mt-3 text-white  rounded-full w-[170px]  py-2"
         >
