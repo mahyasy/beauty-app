@@ -18,7 +18,7 @@ const ParentLayout = ({ children }) => {
         <figure className="relative top-[-50px] left-2">
           <Image
             className="rounded-t-full drop-shadow-5xl h-auto  md:w-[150px] "
-            src="/seven.png"
+            src="/shabgis.jpg"
             width="105"
             priority={true}
             height="0"

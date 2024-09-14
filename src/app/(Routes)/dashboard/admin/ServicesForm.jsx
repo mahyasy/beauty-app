@@ -121,35 +121,35 @@ const ServicesForm = ({ category }) => {
     <div>
       <Form title="داشبورد" href="" icon="">
         <form
-          className="max-w-sm mx-auto flex flex-col"
+          className="max-w-sm mx-auto flex flex-col items-center"
           onSubmit={submitHandler}
         >
           <span className="flex flex-col">
             <input
-              className="rounded-lg p-1 w-[170px]"
+              className="rounded-full my-3 p-1 w-[170px]"
               placeholder="نام سرویس"
               name="faName"
               value={form.faName}
               onChange={inputChangeHandler}
             />
             <input
-              className="rounded-lg p-1 w-[170px]"
+              className="rounded-full p-1 w-[170px] "
               placeholder="نام انگلیسی"
               name="name"
               value={form.name}
               onChange={inputChangeHandler}
             />
           </span>
-          <span className="flex justify-between my-6">
+          <span className="flex justify-between gap-3 my-6">
             <input
-              className="rounded-lg p-2 w-[70px]"
+              className="rounded-lg p-1 w-[70px] text-center"
               placeholder="قیمت"
               name="price"
               value={form.price}
               onChange={inputChangeHandler}
             />
             <input
-              className="rounded-lg p-2 w-[70px]"
+              className="rounded-lg p-1 w-[70px] text-center"
               placeholder="زمان"
               name="duration"
               value={form.duration}
