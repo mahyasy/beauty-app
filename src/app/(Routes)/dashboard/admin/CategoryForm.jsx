@@ -27,27 +27,30 @@ const CategoryForm = ({ category }) => {
   const formChangeHandler = async (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    const file = e.target.files[0];
-    const localImageUrl = URL.createObjectURL(file);
-    setFilesURL((prev) => [...prev, localImageUrl]);
+    console.log({ value, name });
 
-    startTransition(async () => {
-      if (name === "images") {
-        const { data, error } = await supabase.storage
-          .from("images2")
-          .upload(
-            `images/${Math.floor(Math.random() * 10)}-${Date.now()}.png`,
-            file,
-            {
-              cacheControl: "3600",
-              upsert: false,
-            }
-          );
-        setForm({ ...form, images: [data.path] });
-      }
+    if (name === "images") {
+      const file = e.target.files[0];
+      const localImageUrl = URL.createObjectURL(file);
+      setFilesURL((prev) => [...prev, localImageUrl]);
+      startTransition(async () => {
+        if (name === "images") {
+          const { data, error } = await supabase.storage
+            .from("images2")
+            .upload(
+              `images/${Math.floor(Math.random() * 10)}-${Date.now()}.png`,
+              file,
+              {
+                cacheControl: "3600",
+                upsert: false,
+              }
+            );
+          setForm({ ...form, images: [data.path] });
+        }
+      });
+    }
 
-      setForm({ ...form, [name]: value });
-    });
+    setForm({ ...form, [name]: value });
   };
 
   const submitHandler = async (e) => {
