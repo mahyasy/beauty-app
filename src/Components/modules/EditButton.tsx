@@ -49,13 +49,19 @@ const EditButton: React.FC = ({ item }: { item: CategoryType }) => {
   }, []);
 
   useEffect(() => {
-    const option = parentCategory.map((item) => {
+    const option = parentCategory.map((i) => {
       return {
-        value: item._id.toString(),
-        label: item.faName,
+        value: i._id.toString(),
+        label: i.faName,
       };
     });
-    setOptions([...option, { value: "", label: "بدون والد" }]);
+    const filtered = option.filter((i) => {
+      return i.value !== item._id;
+    });
+
+    setOptions([...filtered, { value: "", label: "بدون والد" }]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [parentCategory]);
 
   const showModal = () => {
@@ -147,6 +153,7 @@ const EditButton: React.FC = ({ item }: { item: CategoryType }) => {
               placeholder="انتخاب دسته بندی والد"
               optionFilterProp="label"
               onChange={onChange}
+              defaultValue={item.parentCategory ? item._id : ""}
               // onSearch={onSearch}
               value={form.parentCategory}
               options={options}
