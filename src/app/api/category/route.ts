@@ -162,7 +162,9 @@ export async function DELETE(request: NextRequest) {
         { status: 422 }
       );
 
-    await Category.findByIdAndDelete(id);
+    const category = await Category.findOne({ _id: id });
+    await category.deleteOne()
+
 
     return NextResponse.json(
       { message: "دسته بندی با موفقیت حذف شد" },

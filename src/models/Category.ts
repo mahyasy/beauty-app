@@ -1,5 +1,11 @@
-import { model, models, Schema, InferSchemaType, Types } from "mongoose";
-import { ServiceType } from "./Service";
+import mongoose, {
+  model,
+  models,
+  Schema,
+  InferSchemaType,
+  Types,
+} from "mongoose";
+import Service, { ServiceType } from "./Service";
 
 const categorySchema = new Schema(
   {
@@ -15,6 +21,17 @@ const categorySchema = new Schema(
   },
   { timestamps: true }
 );
+
+// Delete all service
+categorySchema.pre("deleteOne", { document: true }, async function (next) {
+  await Service.deleteMany({ category: this._id });
+  next();
+});
+
+// categorySchema.pre("deleteMany", { document: true }, async function (next) {
+//   await Service.deleteMany()
+//   next();
+// });
 
 const Category = models.Category || model("Category", categorySchema);
 
