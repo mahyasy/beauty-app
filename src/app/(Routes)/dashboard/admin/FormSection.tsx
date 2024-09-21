@@ -40,10 +40,10 @@ const FormSection = ({ categories, allCategories }) => {
       </div>
       <div className="flex justify-center items-center">
         {state === "category" && (
-          <CategoryForm category={JSON.parse(JSON.stringify(allCategories))} />
+          <CategoryForm category={JSON.parse(JSON.stringify(categories))} />
         )}
         {state === "service" && (
-          <ServicesForm category={JSON.parse(JSON.stringify(categories))} />
+          <ServicesForm category={JSON.parse(JSON.stringify(allCategories))} />
         )}
       </div>
     </div>
