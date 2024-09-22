@@ -1,8 +1,8 @@
 import connectDB from "@/utils/connectDB";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-import { authOptions } from "../auth/[...nextauth]/route";
 import User from "@/models/User";
+import { authOptions } from "@/utils/authOptions";
 
 export async function GET() {
   try {
@@ -16,7 +16,6 @@ export async function GET() {
       );
     }
 
-    console.log(session);
     const user = await User.findById(session.id).select("-password");
 
     if (!user) {
