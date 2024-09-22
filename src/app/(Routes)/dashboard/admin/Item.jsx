@@ -43,12 +43,8 @@ const Item = ({ item }) => {
         </Link>
         <span className="flex justify-between gap-2">
         <DeleteButton id={JSON.parse(JSON.stringify(item._id))} />
-<<<<<<< HEAD
-        <EditButton item={JSON.parse(JSON.stringify(item))}  />
-        </span>
-=======
         <EditButton item={JSON.parse(JSON.stringify(item))} />
->>>>>>> 043f7c56befddf5a368da7818435ec30f3b20aac
+        </span>
       </div>
     </section>
   );
