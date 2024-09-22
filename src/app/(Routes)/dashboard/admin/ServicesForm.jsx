@@ -136,7 +136,6 @@ const ServicesForm = ({ category }) => {
         duration: 0,
       });
       setSelectedSubCategory({ sub1: "" });
-      setSelectedMainCategory("");
       setSubCategories({ sub1: [] });
       setFilesURL([]);
     }
@@ -190,6 +189,7 @@ const ServicesForm = ({ category }) => {
               className="my-3"
               onChange={handleMainCategoryChange}
               defaultValue="default"
+              
             >
               <option value={""} id="default" name="default">
                 هیچ کدام
