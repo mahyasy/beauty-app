@@ -3,6 +3,7 @@
 import { revalidatePathAction } from "@/actions/actions";
 import { useTransition } from "react";
 import toast from "react-hot-toast";
+import { IoTrash } from "react-icons/io5";
 
 const DeleteButton = ({
   id,
@@ -47,13 +48,20 @@ const DeleteButton = ({
 
   return (
     <button
+<<<<<<< HEAD
+      className={` bg-red rounded-md text-lg p-1 text-white  ${
+        isPending ? "opacity-80 cursor-not-allowed" : ""
+      }`}
+      onClick={deleteCategoryHandler}
+=======
       className={`border-2 p-1 text-xs rounded-md-1 border-[#FF4C4C] rounded-md ${
         isPending ? "opacity-80 cursor-not-allowed" : ""
       }`}
       onClick={forCategory ? deleteCategoryHandler : deleteServiceHandler}
+>>>>>>> 84658196a431db0835904426d8933b9ca4f6d829
       disabled={isPending}
     >
-      حذف
+      <IoTrash  />
     </button>
   );
 };

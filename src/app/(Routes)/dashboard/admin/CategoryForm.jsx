@@ -84,20 +84,20 @@ const CategoryForm = ({ category }) => {
     <Form title="داشبورد" href="" icon="">
       <form className="flex flex-col items-center">
         <input
-          className="rounded-full p-2 w-[170px]"
+          className="rounded-full p-2 my-3 w-[170px]"
           placeholder="نام دسته بندی"
           name="faName"
           value={form.faName}
           onChange={formChangeHandler}
         />
         <input
-          className="rounded-full p-2 w-[170px]"
+          className="rounded-full  my-3 p-2 w-[170px]"
           placeholder="نام انگلیسی دسته بندی"
           name="name"
           value={form.name}
           onChange={formChangeHandler}
         />
-        <label htmlFor="subCategory" className="py-4">
+        <label htmlFor="subCategory" className="flex flex-col py-4">
           <span className="pl-3">دسته بندی والد:</span>
           <Select
             showSearch
