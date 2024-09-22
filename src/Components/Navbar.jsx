@@ -11,11 +11,14 @@ import { ImUndo2 } from "react-icons/im";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import Spiner from "./modules/Spiner";
 
 const Navbar = () => {
   const pathname = usePathname();
   const isActive = (path) => path === pathname;
   const [role, setRole] = useState("");
+  const { data, status } = useSession();
 
   useEffect(() => {
     (async function () {
@@ -79,9 +82,13 @@ const Navbar = () => {
           )}
         </nav>
 
-        <aside className="ml-10 bg-pink p-3 rounded-lg ">
-          {pathname === "/Details" ? (
-            <ImUndo2 className="text-white" />
+        <aside className="ml-10 bg-pink p-3 rounded-lg flex justify-center items-center">
+          {status === "loading" ? (
+            <span className="px-3 py-[5px] flex justify-center items-center">
+              <Spiner w="w-5" h="h-5" border="border-2" />
+            </span>
+          ) : status === "authenticated" ? (
+            <p className="text-white">{data.user?.name ?? "U"}</p>
           ) : (
             <Link href="/register" className="text-[color:white]">
               ورود/ثبت نام
