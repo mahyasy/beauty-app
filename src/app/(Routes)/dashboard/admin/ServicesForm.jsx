@@ -90,11 +90,10 @@ const ServicesForm = ({ category }) => {
 
   const inputChangeHandler = async (e) => {
     const { name, value } = e.target;
-    const file = e.target.files[0];
-    const localImageUrl = URL.createObjectURL(file);
-    setFilesURL([localImageUrl]);
-
     if (name === "images") {
+      const file = e.target.files[0];
+      const localImageUrl = URL.createObjectURL(file);
+      setFilesURL([localImageUrl]);
       startTransition(async () => {
         const { data, error } = await supabase.storage
           .from("images2")
@@ -137,7 +136,6 @@ const ServicesForm = ({ category }) => {
         duration: 0,
       });
       setSelectedSubCategory({ sub1: "" });
-      setSelectedMainCategory("");
       setSubCategories({ sub1: [] });
       setFilesURL([]);
     }
@@ -191,6 +189,7 @@ const ServicesForm = ({ category }) => {
               className="my-3"
               onChange={handleMainCategoryChange}
               defaultValue="default"
+              
             >
               <option value={""} id="default" name="default">
                 هیچ کدام

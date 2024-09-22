@@ -10,10 +10,26 @@ import { HiScissors } from "react-icons/hi2";
 import { ImUndo2 } from "react-icons/im";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+<<<<<<< HEAD
+=======
+import { useEffect, useState } from "react";
+>>>>>>> 84658196a431db0835904426d8933b9ca4f6d829
 
 const Navbar = () => {
   const pathname = usePathname();
   const isActive = (path) => path === pathname;
+<<<<<<< HEAD
+=======
+  const [role, setRole] = useState("");
+
+  useEffect(() => {
+    (async function () {
+      const res = await fetch("/api/role");
+      const data = await res.json();
+      if (!data.error) setRole(data.role);
+    })();
+  }, []);
+>>>>>>> 84658196a431db0835904426d8933b9ca4f6d829
 
   const navLink = [
     { id: 1, name: "خانه", path: "/", tag: <FcHome /> },
@@ -53,6 +69,23 @@ const Navbar = () => {
               </span>
             );
           })}
+<<<<<<< HEAD
+=======
+          {role && role === "ADMIN" && (
+            <span className="pr-10 flex flex-row  items-center  gap-2 ">
+              <Link
+                className={
+                  isActive("/dashboard/admin")
+                    ? "border-b-2 border-pink rounded-md "
+                    : ""
+                }
+                href={"/dashboard/admin"}
+              >
+                دشبورد
+              </Link>
+            </span>
+          )}
+>>>>>>> 84658196a431db0835904426d8933b9ca4f6d829
         </nav>
 
         <aside className="ml-10 bg-pink p-3 rounded-lg ">

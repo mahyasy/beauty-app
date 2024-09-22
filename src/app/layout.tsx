@@ -4,14 +4,13 @@ import Navbar from "../Components/Navbar";
 import { Toaster } from "react-hot-toast";
 
 import { AntdRegistry } from "@ant-design/nextjs-registry";
-
-
+import SessionProviders from "@/providers/SessionProvider";
 
 export const metadata = {
   title: "Shabgis",
   description: "سالن زیبایی شبگیس لواسان",
   icons: {
-    icon: '/logo.png',
+    icon: "/logo.png",
   },
 };
 
@@ -23,27 +22,29 @@ export default function RootLayout({
   return (
     <html lang="en" dir="rtl">
       <body>
-        <AntdRegistry>
-          <Navbar />
-          <Image
-            priority={true}
-            className="left-leaf z-0"
-            src="/leaf.jpg"
-            width="75"
-            height="70"
-            alt="leaf"
-          />
-          <Image
-            priority={true}
-            className="right-leaf z-0"
-            src="/leaf.jpg"
-            width="75"
-            height="70"
-            alt="leaf"
-          />
-          {children}
-          <Toaster />
-        </AntdRegistry>
+        <SessionProviders>
+          <AntdRegistry>
+            <Navbar />
+            <Image
+              priority={true}
+              className="left-leaf z-0"
+              src="/leaf.jpg"
+              width="75"
+              height="70"
+              alt="leaf"
+            />
+            <Image
+              priority={true}
+              className="right-leaf z-0"
+              src="/leaf.jpg"
+              width="75"
+              height="70"
+              alt="leaf"
+            />
+            {children}
+            <Toaster />
+          </AntdRegistry>
+        </SessionProviders>
       </body>
     </html>
   );
