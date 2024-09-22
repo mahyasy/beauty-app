@@ -84,9 +84,7 @@ const Navbar = () => {
 
         <aside className="ml-10 bg-pink p-3 rounded-lg flex justify-center items-center">
           {status === "loading" ? (
-            <span className="px-3 py-[5px] flex justify-center items-center">
-              <Spiner w="w-5" h="h-5" border="border-2" />
-            </span>
+            <Spiner w="w-5" h="h-5" border="border-2" />
           ) : status === "authenticated" ? (
             <p className="text-white">{data.user?.name ?? "U"}</p>
           ) : (
