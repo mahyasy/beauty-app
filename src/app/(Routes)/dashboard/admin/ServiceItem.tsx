@@ -38,7 +38,7 @@ const ServiceItem = ({ item }) => {
         >
           مشاهده جزییات
         </Link>
-        {/* <DeleteButton id={JSON.parse(JSON.stringify(item._id))} /> */}
+        <DeleteButton forCategory={false} id={JSON.parse(JSON.stringify(item._id))} />
         {/* <EditButton item={JSON.parse(JSON.stringify(item))}  /> */}
       </div>
     </section>
