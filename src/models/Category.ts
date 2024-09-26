@@ -41,6 +41,7 @@ type CategoryType = InferSchemaType<typeof categorySchema> & {
 type CategoryBySubServiceType = InferSchemaType<typeof categorySchema> & {
   _id: string | Types.ObjectId;
   subServices: ServiceType[];
+  subCategories: CategoryType[];
 };
 
 export default Category;
