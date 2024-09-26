@@ -1,6 +1,6 @@
 import { fetchCategoty } from "@/actions/actions";
 
-import Item from "../../Item";
+import Item from "../../../../../../Components/modules/Card";
 import Category, {
   CategoryBySubServiceType,
   CategoryType,
