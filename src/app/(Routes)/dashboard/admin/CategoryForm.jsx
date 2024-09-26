@@ -45,7 +45,10 @@ const CategoryForm = ({ category }) => {
                 upsert: false,
               }
             );
-          setForm({ ...form, images: [data.path] });
+          const {
+            data: { publicUrl },
+          } = supabase.storage.from("images2").getPublicUrl(data.path);
+          setForm({ ...form, images: [publicUrl] });
         }
       });
     }

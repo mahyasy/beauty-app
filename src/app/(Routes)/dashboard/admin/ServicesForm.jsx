@@ -105,7 +105,10 @@ const ServicesForm = ({ category }) => {
               upsert: false,
             }
           );
-        setForm({ ...form, images: [data.path] });
+        const {
+          data: { publicUrl },
+        } = supabase.storage.from("images2").getPublicUrl(data.path);
+        setForm({ ...form, images: [publicUrl] });
         return;
       });
     }
@@ -189,7 +192,6 @@ const ServicesForm = ({ category }) => {
               className="my-3"
               onChange={handleMainCategoryChange}
               defaultValue="default"
-              
             >
               <option value={""} id="default" name="default">
                 هیچ کدام

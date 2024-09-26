@@ -8,9 +8,7 @@ import supabase from "@/lib/supabase/supabase";
 
 
 const Item = ({ item }) => {
-  const {
-    data: { publicUrl },
-  } = supabase.storage.from("images2").getPublicUrl(item.images[0]);
+  
   return (
     <section
       key={item.id}
@@ -21,7 +19,7 @@ const Item = ({ item }) => {
         {item.images.length !== 0 ? (
           <Image
             className="rounded-t-full mt-4 h-auto w-110 px-2"
-            src={publicUrl}
+            src={item.images[0]}
             width={500}
             height={500}
             alt={item.name}
