@@ -45,16 +45,12 @@ export default function Register() {
     const data = await res.json();
     console.log(data);
 
-    if (data.error) toast.error(data.error)
-    if (data.message) toast.success(data.message)
-
+    if (data.error) toast.error(data.error);
+    if (data.message) toast.success(data.message);
   };
 
   return (
-  
-     
-
-      <ParentLayout>
+    <ParentLayout>
       <Form
         title="ثبت نام"
         text="ورود به حساب کاربری"
@@ -97,8 +93,6 @@ export default function Register() {
           ثبت نام تستی
         </button>
       </Form>
-        
-      </ParentLayout>
- 
+    </ParentLayout>
   );
 }
